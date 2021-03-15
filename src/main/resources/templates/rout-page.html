@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+    <script th:src="@{assets/bootstrap-select-1.13.9/dist/js/bootstrap-select.js}"></script>
+
+    <link th:rel="stylesheet" th:href="@{assets/bootstrap-select-1.13.9/dist/css/bootstrap-select.css}"/>
+    <link th:rel="stylesheet" th:href="@{webjars/bootstrap/4.3.1/css/bootstrap.min.css} "/>
+    <link rel="stylesheet" th:href="@{/css/main.css}" type="text/css"/>
+</head>
+
+<body>
+<div class="wrapper">
+    <div th:replace="~{sidebar :: sidebar(rootTab='routs')}">
+    </div>
+    <div id="stuff-page-content" class="content">
+        <h2>Маршруты</h2>
+        <table class="table table-hover">
+            <thead class="table-primary">
+            <tr>
+                <th>#</th>
+                <th>Откуда</th>
+                <th>Куда</th>
+                <th>Расстояние</th>
+                <th>Дата создания</th>
+                <th></th>
+                <th></th>
+            </tr>
+            </thead>
+            <tr class="responsive-row" th:each="rout : ${routs}">
+                <td th:text="${rout.id}"/>
+                <td th:text="${rout.cityFrom}"/>
+                <td th:text="${rout.cityTo}"/>
+                <td th:text="${rout.distance}"/>
+                <td th:text="${rout.createAt}"/>
+                <td>
+                    <a sec:authorize="hasRole('ADMIN')" th:href="@{'/editRout/change/' + ${rout.id}}" class="btn btn-outline-warning"
+                       role="button" aria-pressed="true">Изменить</a>
+                <td/>
+                <td>
+                    <a sec:authorize="hasRole('ADMIN')" th:href="@{'/routs/remove/' + ${rout.id}}" class="btn btn-outline-danger"
+                       role="button" aria-pressed="true">Удалить</a>
+                <td/>
+            </tr>
+        </table>
+    </div>
+</div>
+</body>
+</html>

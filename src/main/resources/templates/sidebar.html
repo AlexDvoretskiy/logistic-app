@@ -1,0 +1,72 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+    <script th:src="@{assets/bootstrap-select-1.13.9/dist/js/bootstrap-select.js}"></script>
+
+    <link th:rel="stylesheet" th:href="@{assets/bootstrap-select-1.13.9/dist/css/bootstrap-select.css}"/>
+    <link th:rel="stylesheet" th:href="@{webjars/bootstrap/4.3.1/css/bootstrap.min.css} "/>
+    <link rel="stylesheet" th:href="@{/css/main.css}" type="text/css"/>
+</head>
+<body>
+    <nav id="sidebar" th:fragment="sidebar(rootTab)">
+        <div class="sidebar-header">
+            <h3>Логистика</h3>
+        </div>
+
+        <ul class="list-unstyled components">
+            <p>Панель управления</p>
+            <li th:classappend="${rootTab == 'calculator' ? 'active' : ''}">
+                <a th:href="@{/}">Рассчитать стоимость</a>
+            </li>
+            <li th:classappend="${rootTab == 'staff' ? 'active' : ''}">
+                <a href="#staffSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Персонал</a>
+                <ul class="collapse list-unstyled" id="staffSubmenu">
+                    <li>
+                        <a th:href="@{/staff}">Весь персонал</a>
+                    </li>
+                    <li>
+                        <a sec:authorize="hasRole('ADMIN')" th:href="@{/editEmployee}">Добавить сотрудника</a>
+                    </li>
+                </ul>
+            </li>
+            <li th:classappend="${rootTab == 'routs' ? 'active' : ''}">
+                <a href="#routSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Маршруты</a>
+                <ul class="collapse list-unstyled" id="routSubmenu">
+                    <li>
+                        <a th:href="@{/routs}">Все маршруты</a>
+                    </li>
+                    <li>
+                        <a sec:authorize="hasRole('ADMIN')" th:href="@{/editRout}">Добавить маршрут</a>
+                    </li>
+                </ul>
+            </li>
+            <li th:classappend="${rootTab == 'fleet' ? 'active' : ''}">
+                <a href="#fleetSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Парк автотранспорта</a>
+                <ul class="collapse list-unstyled" id="fleetSubmenu">
+                    <li>
+                        <a th:href="@{/vehicles}">Весь автотранспорт</a>
+                    </li>
+                    <li>
+                        <a sec:authorize="hasRole('ADMIN')" th:href="@{/editVehicle}">Добавить автотранспорт</a>
+                    </li>
+                </ul>
+            </li>
+            <li th:classappend="${rootTab == 'tariff' ? 'active' : ''}">
+                <a th:href="@{/tariffs}">Тарифы</a>
+            </li>
+        </ul>
+        <ul class="list-unstyled CTAs">
+            <li>
+                <a href="javascript: document.logoutForm.submit()" class="article" >Выйти</a>
+                <form name="logoutForm" th:action="@{/logout}" method="post" th:hidden="true">
+                    <input hidden type="submit" value="Sign Out"/>
+                </form>
+            </li>
+        </ul>
+    </nav>
+</body>
+</html>
